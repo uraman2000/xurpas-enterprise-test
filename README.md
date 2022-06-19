@@ -32,6 +32,10 @@
 $ npm install
 ```
 
+```
+configure the src\common\envs\development.env in your local machine
+```
+
 ## For migrations
 
 ```bash
@@ -53,7 +57,6 @@ $ npm run start:dev
 # production mode
 $ npm run start:prod
 ```
-
 
 ## Support
 

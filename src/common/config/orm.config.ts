@@ -6,14 +6,23 @@ const envFilePath: string = getEnvPath(
 );
 
 dotenv.config({ path: envFilePath });
+
+const connection = () => {
+  if (process.env.CLEARDB_DATABASE_URL) {
+    return { url: process.env.CLEARDB_DATABASE_URL };
+  }
+  return {
+    host: process.env.DATABASE_HOST,
+    port: parseInt(<string>process.env.DATABASE_PORT),
+    username: process.env.DATABASE_USERNAME,
+    password: process.env.DATABASE_PASSWORD,
+    database: process.env.DATABASE,
+  };
+};
+console.log(connection());
 export const typeOrmModuleOptions: TypeOrmModuleOptions = {
   type: 'mysql',
-  url: process.env.CLEARDB_DATABASE_URL,
-  // host: process.env.DATABASE_HOST,
-  // port: parseInt(<string>process.env.DATABASE_PORT),
-  // username: process.env.DATABASE_USERNAME,
-  // password: process.env.DATABASE_PASSWORD,
-  // database: process.env.DATABASE,
+  ...connection(),
   entities: ['dist/**/*.entity.{ts,js}'],
   migrationsRun: true,
   logger: 'file',
